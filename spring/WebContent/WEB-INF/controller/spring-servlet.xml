@@ -19,4 +19,68 @@
 	 <!-- 특정 패키지 안의 클래스들을 스캔하고, Annotation을 확인 후 bean 인스턴스를 생성한다. -->
 	 <context:component-scan base-package="test.spring.bean" />
 	 
+	 <!-- bean 태그  :  객체생성 태그. 
+	 jsp:useBean과 비슷하지만 useBean은 기본생성자만 호출하여 생성이 가능.
+	 bean 태그는 매개변수를 가지고 있는 생성자 호출도 가능하다. -->
+	 <bean id="day" class="java.util.Date" />
+	 
+	 <!-- name =>  setId() / value => 값 (기본형인 문자와 숫자만 가능) / ref  => 참조형(객체)-->
+ 	 <bean id="dto" class="test.spring.model.TestDTO" >
+	 	<property name="id" value="iiiid" />
+	 	<property name="pw" value="pass" />
+	 	<property name="reg" ref="day" />
+	 </bean>
+	
+	<!-- 생성자 호출 -->
+	<bean id="dto2" class="test.spring.model.TestDTO" >
+		<constructor-arg value="testID"/>
+		<constructor-arg value="testPW"/>
+		<constructor-arg ref="day"/>
+	</bean>
+	
+	<bean id="member" class="test.spring.model.MemberDTO"/>
+	
+	<!--  
+		ex) DTO
+		public class DTO{
+			private String id;
+			private String pw;
+			
+			....
+			public DTO(){}
+			public DTO(String id, String pw){ .... }
+			
+			public DTO(String url, boolean play, long num1, int num2){ .... }
+			
+			....get()/set()
+			
+		}
+	 type : 
+	  태그만 봤을 때, 전부다 문자열..
+	 <bean id="dto3" class="test.spring.model.DTO">
+	 	<constructor-arg type="java.lang.String" value="http://naver.com" />
+	 	<constructor-arg type="boolean" value="true" />
+	 	<constructor-arg type="long" value="100" />
+	 	<constructor-arg type="int" value="10" />
+	 </bean>
+	 
+	  index는 0부터 시작한다.
+	 <bean id="dto3" class="test.spring.model.TestDTO">
+	 	<constructor-arg index="1" value="1234"/> ㅡㅡ> id 
+	 	<constructor-arg index="0" value="testID"/> ㅡㅡ> pw 
+	 </bean>
+	 
+	   name : 반드시 매개변수의 이름으로 지정해준다.
+	 <bean id="dto3" class="test.spring.model.DTO">
+	 	<constructor-arg name="url" value="http://naver.com" />
+	 	<constructor-arg name="paly" value="true" />
+	 	<constructor-arg name="num1" value="100" />
+	 	<constructor-arg name="num2" value="10" />
+	 </bean>
+	 -->
+	
+	
+	
+	
+	
 </beans>

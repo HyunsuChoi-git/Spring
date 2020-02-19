@@ -21,12 +21,13 @@
          <param-value>
             /WEB-INF/controller/spring-servlet.xml
             /WEB-INF/controller/member-controller.xml
+            /WEB-INF/controller/hyunsuMember1-controller.xml
          </param-value>
       </init-param>
    </servlet>
    <servlet-mapping>
       <servlet-name>spring</servlet-name>
-      <url-pattern>*.do</url-pattern>
+      <url-pattern>/</url-pattern>
    </servlet-mapping>
                                                                                                             
 </web-app>
