@@ -1,5 +1,7 @@
 package test.hyunsu.model;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,26 +11,36 @@ import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class MemberDAO {
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
-	
+	private DataSource ds;
+	@Autowired
 	private static MemberDAO instance = new MemberDAO();
-	private MemberDAO() {}
+	private MemberDAO() {
+			Context ctx;
+			try {
+				ctx = new InitialContext();
+				ds=(DataSource)ctx.lookup("java:comp/env/jdbc/orcl");
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}
+	}
 	public static MemberDAO getInstance() {
 		return instance;
 	}
 	
-	private Connection getConnection() throws Exception {
-		Context ctx = new InitialContext();
-		Context env = (Context)ctx.lookup("java:comp/env");
-		DataSource ds = (DataSource)env.lookup("jdbc/orcl");
-		
-		return ds.getConnection();
- 	}
+//	private Connection getConnection() throws Exception {
+//		Context ctx = new InitialContext();
+//		DataSource ds=(DataSource)ctx.lookup("java:comp/env/jdbc/orcl");
+//		return ds.getConnection();
+// 	}
 	
 	private void getClose(Connection conn, PreparedStatement pstmt, ResultSet rs) {
 		if(rs != null) try {rs.close();}catch(SQLException e) {e.printStackTrace();}
@@ -38,13 +50,11 @@ public class MemberDAO {
 	
 	
 	
-	
-	
 	public int executeUpdate(String sql, List list) {
 		int result = 0;
 		
 		try {
-			conn = getConnection();
+			conn = ds.getConnection();
 			
 			pstmt = conn.prepareStatement(sql);
 			if(list != null) {
@@ -60,7 +70,7 @@ public class MemberDAO {
 				}
 			}
 			
-			
+			pstmt.executeUpdate();
 			
 			
 		} catch (Exception e) {

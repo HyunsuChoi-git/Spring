@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import test.spring.model.TestDTO;
@@ -125,6 +126,43 @@ public class Hellobean2{
 		return "/WEB-INF/views/spring02/pro.jsp";
 	}	
 	
+	
+	@RequestMapping("hello5.do")
+	@ResponseBody
+	public String hello5() {
+		//return 타입을 바로 웹브라우져에 띄워주는 어노테이션.
+		//따로 jsp 페이지가 필요없음
+		
+		return "hello555555!";
+	}
+	
+	//@RequestMapping 속성들
+	// value=주소, method=전송방식, params=파라미터
+	
+	@RequestMapping(value="hello6.do",params="id=java")
+	public String hello6(String id, String pw) {
+		
+		System.out.println(id);
+		System.out.println(pw);
+		
+		return "/WEB-INF/views/spring01/hello.jsp";
+	}
+	
+	@RequestMapping("hello8.do")
+	public String hello8(@RequestParam(value="msg",defaultValue="hello") String msg) {
+		
+		System.out.println(msg);
+		return "/WEB-INF/views/spring01/hello.jsp";
+	}
+	
+	@RequestMapping("hello9.do")
+	public String hello9(
+			@RequestParam(value="id",required=true) String id, 
+			@RequestParam(value="pw",required=true) String pw, 
+			@RequestParam(value="auto",required=false, defaultValue="0") String auto ) {
+		
+		return "/WEB-INF/views/spring01/hello.jsp";
+	}
 	
 	
 	

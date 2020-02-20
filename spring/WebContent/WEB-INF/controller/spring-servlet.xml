@@ -8,6 +8,20 @@
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-4.3.xsd"
 	>
+	<!-- 다운로드 빈 클래스 세팅
+		컴파일 순서상 다운로드가 최우선순위여야 한다.(서비스 할 때 필요요소를 미리 다운받게 해주기 위해)
+		﻿다운로드는 다운받는 창을 별도로 만들 것임. 다운로드만 하고 페이지 이동은 없음
+		BeanNameViewResolver 는 새로운 창을 구성할 때 우선순위를 주기위해 사용.
+		지정하지 않으면 다운로드 도중에 이동 먼저 처리하려함.
+	 -->
+	<bean id="fileDown" class="test.spring.bean.DownloadView" />
+	
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="0" />
+		<!-- view 에대한 우선순위를 지정하는 옵션. 
+		다운로드는 페이지 이동 전에 다운로드 창이 뜨게 하기 위해, 반드시 우선순위0으로 지정하고,
+		view를 담당하는 ViewResolver에는 0보다 우선순위가 낮은 1을 지정해준다. -->
+	</bean>
 	
 	<!-- 빈클래스가 호출 가능하게 컨트롤러에 세팅
 		HelloBean hello = new HelloBean();
@@ -23,7 +37,6 @@
 	 jsp:useBean과 비슷하지만 useBean은 기본생성자만 호출하여 생성이 가능.
 	 bean 태그는 매개변수를 가지고 있는 생성자 호출도 가능하다. -->
 	 <bean id="day" class="java.util.Date" />
-	 
 	 <!-- name =>  setId() / value => 값 (기본형인 문자와 숫자만 가능) / ref  => 참조형(객체)-->
  	 <bean id="dto" class="test.spring.model.TestDTO" >
 	 	<property name="id" value="iiiid" />
@@ -38,7 +51,6 @@
 		<constructor-arg ref="day"/>
 	</bean>
 	
-	<bean id="member" class="test.spring.model.MemberDTO"/>
 	
 	<!--  
 		ex) DTO
@@ -80,7 +92,22 @@
 	 -->
 	
 	
+	<!-- ﻿ViewResolver 세팅 
+		prefix : 접두어
+		suffix : 접미어
+	-->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="1"/>
+	</bean>
 	
+	<!-- 파일 업로드  -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="-1" /> <!-- -1은 업로드 크기 제한 없음을 의미 -->
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+		
 	
 	
 </beans>
