@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="test">
+  	<!-- test테이블에서 전체 가입자 수 가져오기 select count(*) from test -->
+ 	<select id="userCount" resultType="int">
+ 		select count(*) from test
+ 	</select>
+ 	<select id="maxAge" resultType="int">
+ 		select max(age) from test
+ 	</select>
+ 	<select id="selectAll" resultType="testDTO">
+ 		select * from test
+ 	</select>
+ 	<select id="getUser" parameterType="String" resultType="testDTO">
+ 		select * from test where id = #{value}
+ 	</select>
+ 	<select id="getReg" parameterType="String" resultType="java.sql.Timestamp">
+ 		select reg from test where id= #{value}
+ 	</select>
+ 	<select id="insertUser" parameterType="testDTO">
+ 		insert into test values(#{id},#{pw},#{age},sysdate)
+ 	</select> 
+ 	<select id="updateUser" parameterType="hashmap" >
+ 		update test set pw= #{mapPw}, age= #{mapAge} where id=#{mapId}
+ 	</select>
+ 	<select id="deleteUser" parameterType="String">
+ 		delete from test where id=#{value}
+ 	</select>
+ </mapper>
