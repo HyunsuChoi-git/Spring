@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="myba">
+	
+	<select id="selectIf" parameterType="String" resultType="int">
+		select count(*) from test
+		<if test="value != null">
+			where id=#{value}
+		</if> 
+	</select>
+	<!-- a로그인 체크 -->
+	<select id="selectIf2" parameterType="testDTO" resultType="int">
+		select count(*) from test where id=#{id}
+		<if test="pw != null">
+			and pw=#{pw}
+		</if>		
+	</select>	
+	<select id="choose" parameterType="testDTO" resultType="int">
+		select count(*) from test where id=#{id}
+		<choose>
+			<when test="pw != null">
+				and pw=#{pw}
+			</when>
+			<when test="age != null">
+				and age=#{age}
+			</when>
+			<otherwise>
+				and reg=#{reg}
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- select count(*) from test where id=#{id} and pw=#{pw} 
+		trim
+			prefix: 접두어
+			prefixOverrides : 접두어를 덮어쓰기할 부분 지정
+							    첫번째 조건이 and 또는 or가 될 경우 where로 덮어쓰기
+	-->
+	<select id="selectTrim" parameterType="testDTO" resultType="int">
+		select count(*) from test
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="id != null">
+				id=#{id}
+			</if>
+			<if test="pw != null">
+				and pw=#{pw}
+			</if>
+			
+		</trim>
+	</select>
+	
+	<update id="updateTest" parameterType="testDTO">
+		update test 
+		<trim prefix="set" suffixOverrides=",">	
+			<if test="pw != null">
+				pw=#{pw},
+			</if>
+			<if test="age != null">
+				age=#{age},
+			</if>
+			<if test="name != null">
+				name=#{name}
+			</if>
+		</trim>
+	</update>
+	
+	<!-- foreach 이용해서 컬렉션 같은 반복으로 처리해야할 구문에 사용
+		select * from test where id in (#{item}, #{item}, #{item});
+		item = list 요소를 대신할 별칭 (반복할 때마다 순서대로 요소가 담기는 변수...)
+		open = 반복을 할 때 시작할 값
+		close = 반복이 끝난 후 처리할 값
+		seperator = 반복할 때 요소들의 구분 값
+	 -->
+	
+	<select id="selectIn" parameterType="list" resultType="int">
+		select count(*) from test where id in
+		<foreach collection="list" item="item" open="(" close=")" separator=",">
+			 #{item}
+		</foreach>
+	</select>
+	
+	<!-- select * from test where "+sel+" like '%"+keyword+"'%"-->
+	<select id="selectLike" parameterType="hashmap" resultType="int">
+		select count(*) from test where ${sel} like '%'||#{keyword}||'%'
+	</select>
+	
+	<!-- selectKey
+		insert, update, delete에 사용. 쿼리를 이중으로 실행시켜 결과를 적용하거나
+		돌려주게 해주는 역할	
+	 -->
+	<update id="updateKey" parameterType="testDTO">
+		<selectKey keyProperty="age" resultType="int" order="BEFORE">
+			select count(*) from test
+		</selectKey>
+		update test set pw=#{pw}, age=#{age} where id=#{id}
+	</update>
+	<!-- 테이블의 id값은 test_seq 로 자동으로 올라간다 가정하고.
+		매핑하고 싶은 컬럼 즉, id를 설정하면 보내준 keyProperty가 dto에 자동매핑되고,
+		 자바에서 이 쿼리문 호출 후 dto.getId()로
+		매핑된 값을 꺼내볼 수 있다.
+	 -->
+	
+
+	
+	
+	
+	
+ </mapper>

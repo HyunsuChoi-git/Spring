@@ -9,11 +9,13 @@
 	<!-- typeAlias 세팅  :  sql에서 자주사용하는 (DTO) 클래스의 경로를 줄여쓰기 위해 지정해 놓는 옵션-->
 	<typeAliases>
 		<typeAlias type="test.spring.model.TestMybatisDTO" alias="testDTO" />
+		<typeAlias type="member.model.vo.MemberVO" alias="memberVO" />
 	</typeAliases>
 	
 	<!-- 맵퍼의 경로 세팅 : sql 쿼리문들이 작성되는 xml 파일들의 경로를 설정 -->
 	<mappers>
 		<mapper resource="/sql/testSQL.xml" />
+		<mapper resource="/sql/mabatis.xml" />
+		<mapper resource="/sql/memberSQL.xml" />
 	</mappers>	
-
 </configuration>  

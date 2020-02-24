@@ -8,7 +8,11 @@
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-4.3.xsd"
 	>
-
+	<bean id="memberDAO" class="member.model.dao.MemberDAOImpl">
+	<!-- 이미 spring-sevlet.xml  에서 DB 세팅을 했기 때문에 MemberDAOImpl 객체생성 한 것에 sqlSession 호출 -->
+		<property name="sqlSession" ref="sqlSession"/>
+	</bean>
+	<context:component-scan base-package="member.controller.bean" />
 
 
 </beans>

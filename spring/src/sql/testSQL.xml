@@ -29,4 +29,5 @@
  	<select id="deleteUser" parameterType="String">
  		delete from test where id=#{value}
  	</select>
+ 	
  </mapper>

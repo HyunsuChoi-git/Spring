@@ -18,7 +18,6 @@ public class TestMybatis {
 	@Autowired
 	private SqlSessionTemplate sqlSession = null;
 	
-	
 	@RequestMapping("mybatis.do")
 	public String helloMybatis() {
 		
@@ -100,6 +99,7 @@ public class TestMybatis {
 		
 		return "spring04/updatePro";
 	}
+	
 	
 	@RequestMapping("deleteUser.do")
 	public String deleteUser() {
