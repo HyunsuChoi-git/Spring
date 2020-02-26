@@ -24,6 +24,8 @@
 			</td>
 		</tr>
 	</table>
+	<br/>
+	<div align="center"><button onclick="window.location.href='/spring/board/list.do'">게시판</button></div>
 	<br /><br /><br /><br />
 	<div align="center">
 		<img src="/spring/resources/img/beach.png" width="700" />
@@ -43,6 +45,8 @@
 			</td>
 		</tr>
 	</table>
+	<br/>
+	<div align="center"><button onclick="window.location.href='/spring/board/list.do'">게시판</button></div>
 	<br /><br /><br /><br />
 	<div align="center">
 		<img src="/spring/resources/img/beach.png" width="700" />

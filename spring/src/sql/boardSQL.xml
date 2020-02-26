@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	<select id="countAll" resultType="int">
+		select count(*) from hyunsu_l 
+	</select>
+	<select id="getArticles" parameterType="HashMap" resultType="boardVO">
+		<![CDATA[
+			select rownum, a.* from (select * from hyunsu_l order by ref desc, re_step asc) a where rownum >= #{start} and rownum <= #{end}
+		]]>
+	</select>
+	<select id="numMax" resultType="int">
+		select max(num) from hyunsu_l
+	</select>
+	<select id="updateRe" parameterType="int">
+		update hyunsu_l set re_step = re_step + 1 where ref = #{value} and re_step > 0
+	</select>
+	<insert id="insert" parameterType="boardVO">
+		insert into hyunsu_l(num,id,subject,content,ref,re_step,re_level,reg) values(hyunsu_l_seq.nextVal,#{id},#{subject},#{content},#{ref},#{re_step},#{re_level},sysdate)
+	</insert>
+	<select id="articleNum" parameterType="boardVO" resultType="Integer">
+		select num from hyunsu_l where ref=#{ref} and re_step=#{re_step} and re_level=#{re_level}
+	</select>
+	<select id="getArticle" parameterType="int" resultType="boardVO">
+		select * from hyunsu_l where num=#{value}
+	</select>
+	<update id="readCount" parameterType="int">
+		update hyunsu_l set readcount = readcount+1 where num = #{value}
+	</update>
+	<update id="updateArticle" parameterType="boardVO">
+		update hyunsu_l set subject=#{subject}, content=#{content} where num = #{num}
+	</update>
+	<delete id="deleteArticle" parameterType="int">
+		delete from hyunsu_l where num=#{value}
+	</delete>
+
+	
+</mapper>

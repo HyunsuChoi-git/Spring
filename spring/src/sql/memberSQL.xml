@@ -19,4 +19,7 @@
 	<delete id="deleteMember" parameterType="String">
 		delete from springMember where id= #{value}
 	</delete>
+	<select id="idAvailCheck" parameterType="String" resultType="int">
+		select count(*) from springMember where id=#{value}
+	</select>
 </mapper>

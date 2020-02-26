@@ -50,6 +50,24 @@
 		}
 	
 	</script>
+	<%-- jQuery 방식 --%>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("#id").change(function(){
+				id = $("#id").val();
+				$.ajax({
+					type : "post",
+					url : "/spring/member/ajaxIdAvail.do",
+					data : {id : id},
+					success : function(data){  // url 이 성공하면 success 에 함수가 넘어오는 data를 받는다.
+						console.log(data+"콘솔");
+						$("#idCheckRes").val(data);
+					}
+				});
+			});
+		});
+	</script>
 </head>
 <c:if test="${sessionScope.memId != null}">
 	<c:redirect url="/member/main.do" />
@@ -63,11 +81,15 @@
 	<table>
 		<tr>
 			<td>아이디 * </td>
-			<td><input type="text" name="id" /></td>
+			<td><input type="text" name="id" id="id" /></td>
 		</tr>
 		<tr>
 			<td>아이디 중복검사</td>
 			<td><input type="button" value="중복검사" onclick="confirmIdPopup(this.form)" /></td>
+		</tr>
+		<tr>
+			<td>아이디 사용가능여부</td>
+			<td><input type="text" id="idCheckRes" disabled /></td>
 		</tr>
 		<tr>
 			<td>비밀번호 * </td>

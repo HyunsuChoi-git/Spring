@@ -9,8 +9,11 @@ import member.model.vo.MemberVO;
 
 public class MemberDAOImpl implements MemberDAO{
 
-	@Autowired
 	private SqlSessionTemplate sqlSession = null;
+
+	public SqlSessionTemplate getSqlSession() {
+		return sqlSession;
+	}
 	
 	public void setSqlSession(SqlSessionTemplate sqlSession) {
 		this.sqlSession = sqlSession;
@@ -55,8 +58,11 @@ public class MemberDAOImpl implements MemberDAO{
 
 	@Override
 	public int idAvailCheck(String id) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		int check = (Integer)sqlSession.selectOne("member.idAvailCheck", id);
+		
+		
+		return check;
 	}
 
 }

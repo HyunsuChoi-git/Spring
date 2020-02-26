@@ -8,10 +8,14 @@ import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import member.model.dao.MemberDAO;
 import member.model.vo.MemberVO;
@@ -38,7 +42,7 @@ public class MemberBean {
 		//회원가입 처리 후 메인으로 이동 (pro 페이지 필요X)
  		memberDAO.insertMember(vo);
  		
-		return "member/mian";
+		return "member/main";
 	}
 	
 	
@@ -121,7 +125,7 @@ public class MemberBean {
 			se.invalidate();
 		}
 		
-		res.setContentType("http/html; charset=utf-8");
+		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
 		out.println("<script>");
 		out.println("alert('탈퇴가 완료되었습니다.')");
@@ -129,5 +133,36 @@ public class MemberBean {
 		out.println("</script>");
 		
 	}
+	
+	
+	@RequestMapping("ajaxIdAvail.do")
+	@ResponseBody
+	//public String ajaxIdAvail(String id) throws Exception { //영어로 리턴할 때는 기본
+	public ResponseEntity<String> ajaxIdAvail(String id) throws Exception { //한글을 리턴할 때 리턴타입
+		String result = "";
+		System.out.println("ajax!!");
+		System.out.println("id : " + id);
+		
+		int check = memberDAO.idAvailCheck(id);
+		
+		if(check == 1) {
+			result = "이미 존재하는 아이디";
+		}else if(check == 0){
+			result = "사용가능한 아이디";
+		}
+		System.out.println(check);
+		
+		HttpHeaders responseHeaders = new HttpHeaders();  //헤더객체를 만들어서 
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8"); //헤더정보 추가
+		
+		
+		//return result;
+		return new ResponseEntity<String>(result, responseHeaders, HttpStatus.CREATED);
+		                                                          //상태정보status : 
+		 														// Created(201) - 어떠한 생성작업을 요청받았고, 성공했다.
+		                                                        // 혹은 ok(200) - 요청 성공
+		
+	}
+	
 	
 }

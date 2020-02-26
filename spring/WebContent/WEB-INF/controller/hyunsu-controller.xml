@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.3.xsd"
+	>
+<!-- 	<bean id="hyunsu_lDAO" class="hyunsu.model.dao.Hyunsu_lDAOImpl">
+	이미 spring-sevlet.xml  에서 DB 세팅을 했기 때문에 MemberDAOImpl 객체생성 한 것에 sqlSession 호출
+		<property name="sqlSession" ref="sqlSession"/>
+	</bean>
+	<bean id="hyunsu_mDAO" class="hyunsu.model.dao.Hyunsu_mDAOImpl">
+	이미 spring-sevlet.xml  에서 DB 세팅을 했기 때문에 MemberDAOImpl 객체생성 한 것에 sqlSession 호출
+		<property name="sqlSession" ref="sqlSession"/>
+	</bean> -->
+	<context:component-scan base-package="hyunsu.controller.bean" />
+	
+</beans>
