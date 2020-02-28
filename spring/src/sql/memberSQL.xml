@@ -14,7 +14,13 @@
 		select * from springMember where id = #{id}
 	</select>
 	<update id="updateMember" parameterType="MemberVO">
-		update springMember set pw=#{pw},name=#{name},age=#{age},email=#{email} where id=#{id}
+		update springMember
+		<trim prefix="set" suffixOverrides=",">
+			<if test="pw != null">pw=#{pw},</if>		
+			<if test="name != null">name=#{name},</if>		
+			<if test="age != null">age=#{age},</if>		
+			<if test="email != null">email=#{email}</if>		
+		</trim>
 	</update>
 	<delete id="deleteMember" parameterType="String">
 		delete from springMember where id= #{value}

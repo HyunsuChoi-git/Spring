@@ -23,12 +23,12 @@
             /WEB-INF/controller/member-controller.xml
             /WEB-INF/controller/board-controller.xml
             /WEB-INF/controller/hyunsu-controller.xml
+            /WEB-INF/controller/aop-config.xml
          </param-value>
       </init-param>
    </servlet>
    <servlet-mapping>
       <servlet-name>spring</servlet-name>
       <url-pattern>*.do</url-pattern>
-   </servlet-mapping>
-                                                                                                            
+   </servlet-mapping>                                                                                                      
 </web-app>
