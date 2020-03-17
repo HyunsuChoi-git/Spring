@@ -15,7 +15,7 @@
 	   <!--  어노테이션을 이용한 aspect클래스 사용방법-->
 	   
 	   <!-- 해당 패키지에 있는 컨트롤러 빈 스캔 -->
-	   <context:component-scan base-package="spring.aop.advice"/>
+	    <context:component-scan base-package="spring.aop.advice"/>
 	   <aop:aspectj-autoproxy/>
 	   <!-- 관점의 타겟 클래스 : 공통기능 구현 클래스 -->
 	   <bean id="advice" class="spring.aop.advice.Advice"/>
@@ -31,14 +31,10 @@
 	    <aop:aspectj-autoproxy />
 	    
 	    
-	    
-	    
-	    
-<!-- 	   <aop:config>
+	   <aop:config>
 	           <aop:aspect ref="advice">
 	               <aop:around pointcut="execution(* spring.aop.advice..*(..))" 
 	               method="trace"/>
-	               <aop:before
 	           </aop:aspect>
-	   </aop:config> -->
+	   </aop:config>
   </beans>

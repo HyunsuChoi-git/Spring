@@ -23,6 +23,13 @@
 		view를 담당하는 ViewResolver에는 0보다 우선순위가 낮은 1을 지정해준다. -->
 	</bean>
 	
+	
+	<!-- 200317 CSV관련 서비스 클래스 bean으로 만들기 -->
+	<bean id="csvService" class="test.spring.csv.CsvServiceBean" /> 
+	
+	
+	
+	
 	<!-- 빈클래스가 호출 가능하게 컨트롤러에 세팅
 		HelloBean hello = new HelloBean();
 		과 같다.
